@@ -1,5 +1,15 @@
 
-def main():
+def part_1():
+    with open("inputs/day1") as file:
+        numbers = [int(line) for line in file]
+        for i, a in enumerate(numbers):
+            b_numbers = (b for (j, b) in enumerate(numbers) if j > i)
+            for b in b_numbers:
+                if a + b == 2020:
+                    print(a * b)
+                    return
+
+def part_2():
     with open("inputs/day1") as file:
         numbers = [int(line) for line in file]
         for i, a in enumerate(numbers):
@@ -13,4 +23,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    part_1()
+    part_2()
