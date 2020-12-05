@@ -1,3 +1,5 @@
+from math import prod
+
 def toboggan(slope, step):
     x, y = step
     width = len(slope[0]) - 1
@@ -12,10 +14,7 @@ def part_2():
     with open("inputs/day3") as file:
         slope = file.readlines()
         steps = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
-        m = 1
-        for step in steps:
-            m *= toboggan(slope, step)
-        print(m)
+        print(prod(toboggan(slope, step) for step in steps))
 
 if __name__ == "__main__":
     part_1()
