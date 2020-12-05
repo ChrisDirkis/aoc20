@@ -24,22 +24,8 @@ def part_1():
 
 def part_2():
     with open(input_file) as file:
-        passes = set(get_seat_id(line) for line in file.readlines())
-        print(sorted(passes))
-        started = False
-        i = 0
-        while True:
-            if not started:
-                if i in passes:
-                    started = True
-                    print(f"started at {i}")
-
-            else:
-                if (i not in passes) and (i-1 in passes) and (i+1 in passes):
-                    print(i)
-                    return
-            i += 1
-        pass
+        passes = sorted(get_seat_id(line) for line in file.readlines())
+        print(next(p - 1 for i, p in enumerate(passes[1:]) if p - passes[i] == 2))
 
 if __name__ == "__main__":
     part_1()
