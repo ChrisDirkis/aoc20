@@ -21,20 +21,17 @@ def part_1():
                     graph[child].append(name)
                 else:
                     graph[child] = [name]
-        print(graph)
-        seen = set()
-        working = ["shiny gold"]
-        while len(working) > 0:
-            item = working[0]
-            working = working[1:]
-            if item in seen:
-                continue
-            seen.add(item)
 
+        seen = set()
+        def search(item):
+            if item in seen:
+                return
+            seen.add(item)
             if not item in graph:
-                continue
+                return
             for parent in graph[item]:
-                working.append(parent)
+                search(parent)
+        search("shiny gold")
 
         print(len(seen) - 1)
         pass
@@ -54,16 +51,17 @@ def part_2():
                 else:
                     graph[name] = [child]
 
+        @cache
+        def get_bags(bag, count):
+            if bag in graph:
+                return count * (1 + sum(get_bags(child[1], child[0]) for child in graph[bag]))
+            else:
+                return count
 
-
-        print(get_bags("shiny gold", 1, graph) - 1)
+        print(get_bags("shiny gold", 1) - 1)
         pass
 
-def get_bags(bag, count, graph):
-    if bag in graph:
-        return count * (1 + sum(get_bags(child[1], child[0], graph) for child in graph[bag]))
-    else:
-        return count
+
 
 if __name__ == "__main__":
     part_1()
