@@ -7,16 +7,20 @@ from typing import *
 
 input_file = "inputs/day7"
 
+def parse_line(line):
+    parent, children_str = re.match(r"(.*) bags contain (.*)$", line).groups()
+    if (children_str == "no other bags."):
+        return (parent, [])
+    
+    children = [" ".join(c.split(" ")[1:3]) for c in children_str.split(", ")]
+    return (parent, children)
+
 def part_1():
     with open(input_file) as file:
         graph = dict()
         for line in file:
-            name, children = re.match(r"(.*) bags contain (.*)$", line).groups()
-            if (children == "no other bags."):
-                continue
-            csplit = children.split(", ")
-            real_children = [" ".join(c.split(" ")[1:3]) for c in csplit]
-            for child in real_children:
+            name, children = parse_line(line)
+            for child in children:
                 if child in graph:
                     graph[child].append(name)
                 else:
