@@ -34,33 +34,26 @@ def part_1():
         lines = file.readlines()
         acc, _ = run_until_cycle(lines)
         print(acc)
-        pass
 
 def part_2():
     with open(input_file) as file:
         lines = file.readlines()
         for i, line in enumerate(lines):
+            flag = False
             if line.startswith("jmp"):
-                lines[i] = "nop" + line[3:]
-                    
+                lines[i] = line.replace("jmp", "nop")
+                flag = True
+            elif line.startswith("nop"):
+                lines[i] = line.replace("nop", "jmp")
+                flag = True
+            
+            if flag:
                 acc, ptr = run_until_cycle(lines)
                 if ptr == len(lines):
                     print(acc)
                     break
 
                 lines[i] = line
-            
-            if line.startswith("nop"):
-                lines[i] = "jmp" + line[3:]
-                    
-                acc, ptr = run_until_cycle(lines)
-                if ptr == len(lines):
-                    print(acc)
-                    break
-                    
-                lines[i] = line
-                
-        pass
 
 if __name__ == "__main__":
     part_1()
