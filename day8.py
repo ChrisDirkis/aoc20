@@ -7,6 +7,9 @@ from typing import *
 
 input_file = "inputs/day8"
 
+def make_machine(string):
+    return [(i, int(v)) for i, v in re.findall(r"(.{3}) ([-+]\d*)\n", string)]
+
 def run_until_cycle(machine):
     acc = 0
     ptr = 0
@@ -17,8 +20,7 @@ def run_until_cycle(machine):
         if ptr >= len(machine):
             break
         seen.add(ptr)
-        instr, value = re.match(r"(.{3}) ([-+]\d*)$", machine[ptr]).groups()
-        value = int(value)
+        instr, value = machine[ptr]
         if instr == "nop":
             ptr += 1
         elif instr == "acc":
@@ -31,29 +33,23 @@ def run_until_cycle(machine):
 
 def part_1():
     with open(input_file) as file:
-        lines = file.readlines()
-        acc, _ = run_until_cycle(lines)
+        machine = make_machine(file.read())
+        acc, _ = run_until_cycle(machine)
         print(acc)
 
 def part_2():
     with open(input_file) as file:
-        lines = file.readlines()
-        for i, line in enumerate(lines):
-            flag = False
-            if line.startswith("jmp"):
-                lines[i] = line.replace("jmp", "nop")
-                flag = True
-            elif line.startswith("nop"):
-                lines[i] = line.replace("nop", "jmp")
-                flag = True
-            
-            if flag:
-                acc, ptr = run_until_cycle(lines)
-                if ptr == len(lines):
+        machine = make_machine(file.read())
+        for i, instr in enumerate(machine):
+            if instr[0] != "acc":
+                machine[i] = ("jmp" if instr[0] == "nop" else "nop", instr[1])
+
+                acc, ptr = run_until_cycle(machine)
+                if ptr == len(machine):
                     print(acc)
                     break
 
-                lines[i] = line
+                machine[i] = instr
 
 if __name__ == "__main__":
     part_1()
