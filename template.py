@@ -5,16 +5,21 @@ import re
 
 from typing import *
 
-input_file = "inputs/dayX"
+data_file_name = "inputs/dayX"
+testing_file_name = data_file_name + "_test"
 
-def part_1():
-    with open(input_file) as file:
+def part_1(filename):
+    print(f"Part 1: {filename}")
+    with open(filename) as file:
         pass
 
-def part_2():
-    with open(input_file) as file:
+def part_2(filename):
+    print(f"Part 2: {filename}")
+    with open(filename) as file:
         pass
 
 if __name__ == "__main__":
-    part_1()
-    part_2()
+    part_1(testing_file_name)
+    part_1(data_file_name)
+    part_2(testing_file_name)
+    part_2(data_file_name)
