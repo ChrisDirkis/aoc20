@@ -28,17 +28,13 @@ def part_2():
 
         for i in range(len(nums)):
             j = 0
-            while True:
+            s = 0
+            while i + j <= len(nums) and s < invalid:
                 test = nums[i:i+j]
-                s = sum(test)
-                if s == invalid:
+                if (s := sum(test)) == invalid:
                     print(min(test) + max(test))
                     return
-                elif s > invalid:
-                    break
                 j += 1
-                if i + j > len(nums):
-                    break
             
         pass
 
