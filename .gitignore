@@ -1,1 +1,2 @@
 inputs/
+.mypy_cache/
