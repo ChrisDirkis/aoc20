@@ -1,2 +1,3 @@
 inputs/
 .mypy_cache/
+.vscode/
