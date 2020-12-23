@@ -6,7 +6,7 @@ from collections import defaultdict
 
 from typing import *
 
-data_file_name = "inputs/day16"
+data_file_name = "inputs/day17"
 testing_file_name = data_file_name + "_test"
 
 
