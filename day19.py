@@ -58,16 +58,12 @@ def part_2(filename):
             if len(rule) == 1:
                 if isinstance(rule[0], int):
                     subrules = rules[rule[0]]
-                    suboffsets = []
-                    for subrule in subrules:
-                        suboffsets += match(val, subrule, offsets)
-                    return list(set(suboffsets))
+                    return list(set(sum((match(val, subrule, offsets) for subrule in subrules), [])))
                 else:
                     return [offset + 1 for offset in offsets if offset < len(val) and val[offset] == rule[0]]
             else:
                 for step in rule:
                     offsets = match(val, [step], offsets)
-                
                 return offsets
         
         print(sum(any(o == len(val) for o in match(val, rules[0][0], [0])) for val in sections[1].split("\n")))
